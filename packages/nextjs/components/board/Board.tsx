@@ -40,7 +40,7 @@ export const Board = () => {
           <h2 className="mt-4 text-3xl">My Bag</h2>
           <div className="flex flex-wrap" style={{ width: "500px"}}>
             {bagData && bagData.map((item, index) => (
-              <Cell key={item.id.toString()} id={item.id.toString()} content={item.content.toString()} type={item.type} index={index} />
+              <Cell key={item.id.toString()} id={item.id.toString()} content={item.content.toString()} type={item.typeGrid} index={index} />
             ))}
           </div>
         </div>

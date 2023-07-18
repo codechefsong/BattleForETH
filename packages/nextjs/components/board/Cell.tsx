@@ -6,7 +6,13 @@ export const Cell = ({ id, content, type, index }) => {
   const router = useRouter();
 
   const handleDrop = async (item, index) => {
-    router.push('/confirm/move/'+ index)
+    console.log(item, index)
+    if (item.type === "mybags") {
+      router.push('/confirm/place/'+ index);
+    }
+    else {
+      router.push(`/confirm/move/${item.index}/${index}`);
+    }
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({

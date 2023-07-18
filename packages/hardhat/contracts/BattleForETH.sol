@@ -26,7 +26,7 @@ contract BattleForETH {
             }
         }
 
-         myBag.push(Box(26, 26, "mybags", "X"));
+         myBag.push(Box(26, 26, "mybags", "0"));
     }
 
     modifier isOwner() {
@@ -51,6 +51,11 @@ contract BattleForETH {
         myBag.pop();
 
         nums.push(index);
+    }
+
+    function movePlayer(uint256 oldIndex, uint256 newIndex) public {
+        grid[oldIndex].content = "-";
+        grid[newIndex].content = "0";
     }
 
      function buySeed() public {
