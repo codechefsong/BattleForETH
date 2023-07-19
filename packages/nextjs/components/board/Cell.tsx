@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useDrag, useDrop } from 'react-dnd';
 import { useRouter } from 'next/router';
 
@@ -15,17 +15,27 @@ export const Cell = ({ id, content, type, index }) => {
     }
   };
 
+  const canMove = () => {
+    if (index % 2 !== 0) return true;
+    return false;
+  }
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'CELL',
     item: { id, index, type, content },
     collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+      isDragging: monitor.isDragging()
     }),
   }));
 
-  const [, drop] = useDrop(() => ({
+  const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'CELL',
     drop: (item) => handleDrop(item, index),
+    canDrop: () => canMove(),
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop()
+    }),
   }));
 
   const cellRef = useRef(null);
@@ -35,13 +45,56 @@ export const Cell = ({ id, content, type, index }) => {
   return (
     <div
       ref={cellRef}
-      className="w-16 h-16 border border-gray-300 flex items-center justify-center font-bold"
+      className="w-16 h-16 border border-gray-300 flex items-center justify-center font-bold relative"
       style={{
         opacity: isDragging ? 0.5 : 1,
+        background: "white",
         cursor: 'move',
       }}
     >
       {content}
+      {isOver && canDrop && <div
+        className="overlay"
+        role={type}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          opacity: 0.5,
+          backgroundColor: "blue",
+        }}
+      />}
+      {!isOver && canDrop && <div
+        className="overlay"
+        role={type}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          opacity: 0.5,
+          backgroundColor: "yellow",
+        }}
+      />}
+      {isOver && !canDrop && <div
+        className="overlay"
+        role={type}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          opacity: 0.5,
+          backgroundColor: "red",
+        }}
+      />}
     </div>
   );
 };
