@@ -15,8 +15,20 @@ export const Cell = ({ id, content, type, index }) => {
     }
   };
 
-  const canMove = () => {
-    if (index % 2 !== 0) return true;
+  const canMove = (item) => {
+    if (+item.id > 25) return true;
+    if (+item.id === 4 && +item.id + 1 === index
+        || +item.id === 9 && +item.id + 1 === index
+        || +item.id === 14 && +item.id + 1 === index
+        || +item.id === 19 && +item.id + 1 === index) return false;
+    if (+item.id === 5 && +item.id - 1 === index
+      || +item.id === 10 && +item.id - 1 === index
+      || +item.id === 15 && +item.id - 1 === index
+      || +item.id === 20 && +item.id - 1 === index) return false;
+    if (+item.id + 1 === index
+        || +item.id - 1 === index
+        || +item.id + 5 === index
+        || +item.id - 5 === index) return true;
     return false;
   }
 
@@ -31,7 +43,7 @@ export const Cell = ({ id, content, type, index }) => {
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'CELL',
     drop: (item) => handleDrop(item, index),
-    canDrop: () => canMove(),
+    canDrop: (item) => canMove(item),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop()
