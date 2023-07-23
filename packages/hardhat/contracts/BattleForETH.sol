@@ -12,6 +12,7 @@ contract BattleForETH {
         uint256 id;
         string typeGrid;
         string content;
+        uint256 hp;
     }
 
     constructor(address _owner) {
@@ -21,12 +22,13 @@ contract BattleForETH {
 
         for (uint256 row = 0; row < 5; row++) {
             for (uint256 col = 0; col < 5; col++) {
-                grid.push(Box(id, id, "base", "-"));
+                grid.push(Box(id, id, "empty", "-", 0));
                 id++;
             }
         }
 
-         myBag.push(Box(26, 26, "mybags", "0"));
+        myBag.push(Box(26, 26, "army", "0", 10));
+        myBag.push(Box(27, 27, "army", "0", 10));
     }
 
     modifier isOwner() {
@@ -46,22 +48,36 @@ contract BattleForETH {
         return nums;
     }
 
-    function moveItem(uint256 index) public {
+    function placeFighter(uint256 index) public {
         grid[index].content = "0";
+        grid[index].hp = 10;
+        grid[index].typeGrid = "sword";
         myBag.pop();
 
         nums.push(index);
     }
 
     function movePlayer(uint256 oldIndex, uint256 newIndex) public {
-        grid[oldIndex].content = "-";
-        grid[newIndex].content = "0";
+        Box memory data1 = grid[oldIndex];
+        Box memory data2 = grid[newIndex];
+        grid[oldIndex] = data2;
+        grid[newIndex] = data1;
     }
 
-     function buySeed() public {
+    function attack(uint256 attacker, uint256 target) public {
+        require(grid[attacker].hp != 0);
+        grid[target].hp -= 5;
+        if (grid[target].hp <= 0) {
+            grid[target].content = "-";
+            grid[target].typeGrid = "empty";
+            grid[target].hp = 0;
+        }
+    }
+
+     function buyArmy() public {
         uint256 total = nums.length;
 
-        myBag.push(Box(26 + total , 26 + total, "mybags", "O"));
+        myBag.push(Box(26 + total , 26 + total, "army", "O", 10));
     }
 
     function withdraw() isOwner public {

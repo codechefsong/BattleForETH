@@ -2,13 +2,16 @@ import { useRef } from "react";
 import { useDrag, useDrop } from 'react-dnd';
 import { useRouter } from 'next/router';
 
-export const Cell = ({ id, content, type, index }) => {
+export const Cell = ({ id, content, type, index, hp, gridData }) => {
   const router = useRouter();
 
   const handleDrop = async (item, index) => {
-    console.log(item, index)
-    if (item.type === "mybags") {
+    console.log(item, gridData[index])
+    if (item.type === "army") {
       router.push('/confirm/place/'+ index);
+    }
+    else if (gridData[index].typeGrid === "sword"){
+      router.push(`/confirm/attack/${item.index}/${index}`);
     }
     else {
       router.push(`/confirm/move/${item.index}/${index}`);
@@ -34,7 +37,7 @@ export const Cell = ({ id, content, type, index }) => {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'CELL',
-    item: { id, index, type, content },
+    item: { id, index, type, hp, content },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
     }),

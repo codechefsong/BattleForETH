@@ -3,21 +3,22 @@ import { useRouter } from 'next/router';
 
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
-const ConfirmChange: NextPage = () => {
+const ConfirmAttack: NextPage = () => {
   const router = useRouter();
-  const { id, } = router.query;
+  const { oldIndex, newIndex } = router.query;
+  console.log(oldIndex, newIndex)
 
-  const { writeAsync: moveItem, isLoading } = useScaffoldContractWrite({
+  const { writeAsync: attack } = useScaffoldContractWrite({
     contractName: "BattleForETH",
-    functionName: "placeFighter",
-    args: [id],
+    functionName: "attack",
+    args: [oldIndex, newIndex],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
     },
   });
 
   const handleYes = async() => {
-    await moveItem();
+    await attack();
     router.push('/game');
   }
 
@@ -25,7 +26,7 @@ const ConfirmChange: NextPage = () => {
      <div className="flex items-center flex-col flex-grow pt-7">
       <div className="px-5">
         <h1 className="text-center mb-5">
-          <span className="block text-2xl mb-2">Are you sure to place troop to position {id}?</span>
+          <span className="block text-2xl mb-2">Are you sure to attack {newIndex}?</span>
         </h1>
 
         <button className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50" onClick={handleYes}>
@@ -39,4 +40,4 @@ const ConfirmChange: NextPage = () => {
   )
 }
 
-export default ConfirmChange;
+export default ConfirmAttack;
