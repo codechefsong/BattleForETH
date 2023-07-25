@@ -4,7 +4,6 @@ pragma solidity >=0.8.0 <0.9.0;
 contract BattleForETH {
     address public immutable owner;
     Box[] public grid;
-    Box[] public myBag;
     uint256[] public nums;
 
     struct Box {
@@ -26,9 +25,6 @@ contract BattleForETH {
                 id++;
             }
         }
-
-        myBag.push(Box(26, 26, "army", "0", 0));
-        myBag.push(Box(27, 27, "army", "0", 0));
     }
 
     modifier isOwner() {
@@ -40,10 +36,6 @@ contract BattleForETH {
         return grid;
     }
 
-    function getMyBags() public view returns (Box[] memory){
-        return myBag;
-    }
-
     function getNums() public view returns (uint256[] memory){
         return nums;
     }
@@ -52,7 +44,6 @@ contract BattleForETH {
         grid[index].content = "0";
         grid[index].hp = 10;
         grid[index].typeGrid = "sword";
-        myBag.pop();
 
         nums.push(index);
     }
@@ -76,12 +67,6 @@ contract BattleForETH {
             grid[target].typeGrid = "empty";
             grid[target].hp = 0;
         }
-    }
-
-     function buyArmy() public {
-        uint256 total = nums.length;
-
-        myBag.push(Box(26 + total , 26 + total, "army", "O", 10));
     }
 
     function withdraw() isOwner public {

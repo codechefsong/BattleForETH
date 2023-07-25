@@ -19,8 +19,10 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
   };
 
   const canMove = (item) => {
-    console.log(item)
-    if (+item.id > 25) return true;
+    if (+item.id > 25){
+      if (index === 0 || index === 24 || index === 4 || index === 20) return true;
+      return false;
+    } 
     if (+item.id === 4 && +item.id + 1 === index
         || +item.id === 9 && +item.id + 1 === index
         || +item.id === 14 && +item.id + 1 === index
@@ -63,7 +65,7 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
   return (
     <div
       ref={cellRef}
-      className="w-16 h-16 border border-gray-300 flex items-center justify-center font-bold relative"
+      className="w-20 h-20 border border-gray-300 flex items-center justify-center font-bold relative"
       style={{
         opacity: isDragging ? 0.5 : 1,
         background: "white",
