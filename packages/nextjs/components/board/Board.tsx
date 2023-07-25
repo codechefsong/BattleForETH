@@ -32,7 +32,7 @@ export const Board = () => {
           <h2 className="mt-4 text-3xl">Ground</h2>
           <div className="flex flex-wrap" style={{ width: "350px"}}>
             {gridData && gridData.map((item, index) => (
-              <Cell key={item.id.toString()} id={item.id.toString()} content={item.content.toString()} type={item.typeGrid} index={index} hp={item.hp} gridData={gridData}/>
+              <Cell key={item.id.toString()} id={item.id.toString()} content={item.content.toString()} type={item.typeGrid} index={index} hp={item.hp.toString()} gridData={gridData}/>
             ))}
           </div>
         </div>
@@ -40,7 +40,7 @@ export const Board = () => {
           <h2 className="mt-4 text-3xl">My Bag</h2>
           <div className="flex flex-wrap" style={{ width: "500px"}}>
             {bagData && bagData.map((item, index) => (
-              <Cell key={item.id.toString()} id={item.id.toString()} content={item.content.toString()} type={item.typeGrid} index={index} hp={item.hp} gridData={gridData} />
+              <Cell key={item.id.toString()} id={item.id.toString()} content={item.content.toString()} type={item.typeGrid} index={index} hp={item.hp.toString()} gridData={gridData} />
             ))}
           </div>
         </div>

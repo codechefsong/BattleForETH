@@ -27,8 +27,8 @@ contract BattleForETH {
             }
         }
 
-        myBag.push(Box(26, 26, "army", "0", 10));
-        myBag.push(Box(27, 27, "army", "0", 10));
+        myBag.push(Box(26, 26, "army", "0", 0));
+        myBag.push(Box(27, 27, "army", "0", 0));
     }
 
     modifier isOwner() {
@@ -62,6 +62,10 @@ contract BattleForETH {
         Box memory data2 = grid[newIndex];
         grid[oldIndex] = data2;
         grid[newIndex] = data1;
+        grid[oldIndex].index = data1.index;
+        grid[oldIndex].id = data1.id;
+        grid[newIndex].index = data2.index;
+        grid[newIndex].id = data2.id;
     }
 
     function attack(uint256 attacker, uint256 target) public {

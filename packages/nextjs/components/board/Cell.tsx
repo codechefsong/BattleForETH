@@ -19,6 +19,7 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
   };
 
   const canMove = (item) => {
+    console.log(item)
     if (+item.id > 25) return true;
     if (+item.id === 4 && +item.id + 1 === index
         || +item.id === 9 && +item.id + 1 === index
@@ -56,6 +57,8 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
   const cellRef = useRef(null);
 
   drag(drop(cellRef)); 
+
+  console.log(hp)
 
   return (
     <div
@@ -110,6 +113,18 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
           backgroundColor: "red",
         }}
       />}
+      {hp !== "0" && <p
+        className="overlay"
+        style={{
+          position: 'absolute',
+          bottom: -15,
+          left: 1,
+          zIndex: 1,
+          fontSize: 12
+        }}
+      >
+        {hp}
+      </p>}
     </div>
   );
 };
