@@ -13,6 +13,9 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
     else if (gridData[index].typeGrid === "sword"){
       router.push(`/confirm/attack/${item.index}/${index}`);
     }
+    else if (gridData[index].typeGrid === "reward"){
+      router.push(`/confirm/reward/${item.index}/${index}`);
+    }
     else {
       router.push(`/confirm/move/${item.index}/${index}`);
     }
