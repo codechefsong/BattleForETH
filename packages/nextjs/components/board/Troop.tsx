@@ -39,7 +39,7 @@ export const Troop = () => {
         cursor: 'move',
       }}
     >
-      {data.content}
+      <img src="/assets/troop.png" alt="Troop" />
     </div>
   );
 };

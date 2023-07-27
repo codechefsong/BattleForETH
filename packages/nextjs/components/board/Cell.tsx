@@ -75,7 +75,11 @@ export const Cell = ({ id, content, type, index, hp, gridData }) => {
         cursor: 'move',
       }}
     >
-      {content}
+      {(id === "0" || id === "4" || id === "20" || id === "24") &&  <img className="absolute z-0" src="/assets/pond.png" alt="Pond" />}
+      {content === "0" &&  <img className="z-10" src="/assets/troop.png" alt="Troop" />}
+      {content === "G" &&  <img src="/assets/chest.png" alt="Chest" />}
+      {content === "e" &&  <img src="/assets/ethereum.png" alt="Ethereum" />}
+
       {isOver && canDrop && <div
         className="overlay"
         role={type}
